@@ -16,7 +16,7 @@ export default function Authors() {
 
   useEffect(() => {
     getAllTheAuthors();
-  }, []);
+  });
 
   return (
     <div className="text-center my-4">
