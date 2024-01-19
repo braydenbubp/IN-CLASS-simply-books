@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { getAuthors, createAuthor, updateAuthor } from '../../api/authorData';
+import { createAuthor, updateAuthor } from '../../api/authorData';
 
 const initialState = {
   first_name: '',
@@ -16,13 +16,10 @@ const initialState = {
 
 function AuthorForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [authors, setAuthors] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    getAuthors(user.uid).then(setAuthors);
-
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
 
@@ -43,7 +40,7 @@ function AuthorForm({ obj }) {
       createAuthor(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateAuthor(patchPayload).then(() => {
-          router.push('/');
+          router.push('/authors');
         });
       });
     }
@@ -54,29 +51,29 @@ function AuthorForm({ obj }) {
       <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Author</h2>
 
       {/* TITLE INPUT  */}
-      <FloatingLabel controlId="floatingInput1" label="First Name" className="mb-3">
+      <FloatingLabel controlId="floatingInput21" label="First Name" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Author First Name"
-          name="first name"
+          name="first_name"
           value={formInput.first_name}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
 
-      <FloatingLabel controlId="floatingInput3" label="Last Name" className="mb-3">
+      <FloatingLabel controlId="floatingInput22" label="Last Name" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Author Last Name"
-          name="last name"
+          name="last_name"
           value={formInput.last_name}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
 
-      <FloatingLabel controlId="floatingInput3" label="Email" className="mb-3">
+      <FloatingLabel controlId="floatingInput23" label="Email" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Author Email"
