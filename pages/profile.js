@@ -1,5 +1,14 @@
 import React from 'react';
+import User from './user';
+import { useAuth } from '../utils/context/authContext';
 
 export default function Profile() {
-  return <div>profile here</div>;
+  const { user } = useAuth();
+
+  return (
+    <>
+      <User displayName={user.displayName} image={user.image} email={user.email} lastLogin={user.lastLogin} />
+      {/* <SignOut /> */}
+    </>
+  );
 }

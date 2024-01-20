@@ -1,28 +1,37 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { viewAuthorDetails } from '../../api/mergedData';
+import BookCard from '../../components/BookCard';
 
 export default function ViewAuthor() {
   const [authorDetails, setAuthorDetails] = useState({});
-  const router = useRouter;
+  const router = useRouter();
 
   const { firebaseKey } = router.query;
+
+  const getTheAuthorDetails = () => {
+    viewAuthorDetails(firebaseKey).then(setAuthorDetails);
+  };
 
   useEffect(() => {
     viewAuthorDetails(firebaseKey).then(setAuthorDetails);
   }, [firebaseKey]);
-
+  console.warn(authorDetails);
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="text-white ms-5 details">
         <h5>
           {authorDetails.first_name} {authorDetails.last_name} {
-        authorDetails.favorite ? '<3' : ''
+        authorDetails.favorite ? ' 🤍' : ''
       }
         </h5>
         <a href={`mailto:${authorDetails.email}`}> {authorDetails.email}
         </a>
-        <p>{authorDetails.description || ''}</p>
+        <div>
+          {authorDetails.books?.map((book) => (
+            <BookCard key={book.firebaseKey} bookObj={book} onUpdate={getTheAuthorDetails} />
+          ))}
+        </div>
       </div>
     </div>
   );
