@@ -3,7 +3,7 @@ import { useAuth } from '../utils/context/authContext';
 import SignOut from '../components/SignOut';
 
 export default function User() {
-  const { user } = useAuth;
+  const { user } = useAuth();
 
   return (
     <div className="text-light text-center">
@@ -15,7 +15,7 @@ export default function User() {
         {user.email}
       </h2>
       <h3>
-        {user.metadata.lastLoginTime}
+        {user.metadata.lastSignInTime}
       </h3>
       <SignOut />
     </div>
