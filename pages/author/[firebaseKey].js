@@ -16,7 +16,7 @@ export default function ViewAuthor() {
   useEffect(() => {
     viewAuthorDetails(firebaseKey).then(setAuthorDetails);
   }, [firebaseKey]);
-  console.warn(authorDetails);
+
   return (
     <div className="mt-5 d-flex flex-wrap">
       <div className="text-white ms-5 details">
